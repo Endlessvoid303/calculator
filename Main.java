@@ -14,7 +14,7 @@ public class Main {
     static short height = 900;
 
     // * define data about the buttons */
-    static Dimension buttonsize = new Dimension((width - 60) / 3, (height - 60) / 6);
+    static Dimension buttonsize = new Dimension((width - 60) / 3, (height - 60) / 7);
     static Font buttonfont = new Font("Arial", Font.PLAIN, 40);
 
     // * set defaults for calculator data */
@@ -42,9 +42,9 @@ public class Main {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 4;
         gbc.gridheight = 1;
-        label.setPreferredSize(new Dimension(width - 60, (height - 60) / 6));
+        label.setPreferredSize(new Dimension(width - 60, (height - 60) / 7));
 
         // * style the screen */
         label.setFont(buttonfont);
@@ -74,6 +74,11 @@ public class Main {
 
         // * add the calculate button to the screen */
         addcalculatebutton(0, 5);
+
+        //* add other buttons */
+        adddecimalbutton(0, 6);
+        addbackspacebutton(1, 6);
+        adddeletebutton(2,6);
 
         // * listen for input */
         frame.setFocusable(true);
@@ -120,13 +125,30 @@ public class Main {
         updatenumdisplay();
         frame.setVisible(true);
     }
+    public static void delete() {
+        oldnum = 0;
+        operator = "";
+        newnum = 0;
+        usingdecimal = false;
+        decimals = 0;
+        updatenumdisplay();
+    }
+    public static void backspace() {
+        newnum = 0;
+        usingdecimal = false;
+        decimals = 0;
+        updatenumdisplay();
+    }
+    public static void decimal() {
+        usingdecimal = true;
+        updatenumdisplay();
+    }
 
     public static void addnum(String buttonInput) {
         frame.requestFocusInWindow();
         Integer number = Integer.parseInt(buttonInput);
         if (operator != "" || oldnum == 0.0) {
             if (usingdecimal) {
-                newnum /= 10;
                 decimals++;
             } else {
                 newnum *= 10;
@@ -167,6 +189,19 @@ public class Main {
         operator = "";
         System.out.println(String.format("result calculated: %s %s %s", oldnum, operator, newnum));
         updatenumdisplay();
+    }
+
+    public static void adddecimalbutton(Integer gridx, Integer gridy) {
+        ActionListener buttonListener = e -> decimal();
+        createbutton(buttonListener, ".", gridx, gridy);
+    }
+    public static void addbackspacebutton(Integer gridx, Integer gridy) {
+        ActionListener buttonListener = e -> backspace();;
+        createbutton(buttonListener, "<-", gridx, gridy);
+    }
+    public static void adddeletebutton(Integer gridx, Integer gridy) {
+        ActionListener buttonListener = e -> delete();
+        createbutton(buttonListener, "x", gridx, gridy);
     }
 
     public static void addnumbutton(Integer nummer, Integer gridx, Integer gridy) {
