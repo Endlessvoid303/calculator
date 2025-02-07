@@ -115,47 +115,32 @@ public class Main {
     }
 
     public static void addnumbutton(Integer nummer, Integer gridx, Integer gridy) {
-        GridBagConstraints gbc = new GridBagConstraints();
         ActionListener buttonListener = e -> addnum(((JButton) e.getSource()).getText());
-        JButton num = new JButton(nummer.toString());
-
-        num.setPreferredSize(buttonsize);
-        num.setFont(buttonfont);
-        num.addActionListener(buttonListener);
-
-        gbc.gridx = gridx;
-        gbc.gridy = gridy;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-
-        frame.add(num, gbc);
+        createbutton(buttonListener, String.valueOf(nummer), gridx, gridy);
     }
 
     public static void addopperatorbutton(String operator, Integer gridx, Integer gridy) {
-        GridBagConstraints gbc = new GridBagConstraints();
         ActionListener buttonListener = e -> setoperator(((JButton) e.getSource()).getText());
-        JButton num = new JButton(operator);
-        num.setPreferredSize(buttonsize);
-        num.setFont(buttonfont);
-        num.addActionListener(buttonListener);
-        gbc.gridx = gridx; // Column 0
-        gbc.gridy = gridy;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        frame.add(num, gbc);
+        createbutton(buttonListener, operator, gridx, gridy);
     }
 
     public static void addcalculatebutton(Integer gridx, Integer gridy) {
-        GridBagConstraints gbc = new GridBagConstraints();
         ActionListener buttonListener = e -> calculate();
-        JButton num = new JButton("=");
+        createbutton(buttonListener, "=", gridx, gridy);
+    }
+    public static void createbutton(ActionListener buttonListener,String displaytext , Integer gridx, Integer gridy) {
+        //* create a new button */
+        GridBagConstraints gbc = new GridBagConstraints();
+        //* set the display text */
+        JButton num = new JButton(displaytext);
+        //* set the data */
         num.setPreferredSize(buttonsize);
         num.setFont(buttonfont);
         num.addActionListener(buttonListener);
-        gbc.gridx = gridx; // Column 0
+        //* position the button */
+        gbc.gridx = gridx;
         gbc.gridy = gridy;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
+        //* add the button */
         frame.add(num, gbc);
     }
 
