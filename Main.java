@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.math.*;;
 
-
-// TODO:make a better way to add numbers after eachother using numbers /
 public class Main {
     // * define window size information */
     static short width = 600;
@@ -14,9 +13,11 @@ public class Main {
     static Font buttonfont = new Font("Arial", Font.PLAIN, 40);
 
     // * set defaults for calculator data */
-    static String oldnum = "";
+    static double oldnum = 0;
     static String operator = "";
-    static String newnum = "";
+    static double newnum = 0;
+    static boolean usingdecimal = false;
+    static short decimals = 0;
 
     // * create a window */
     static JFrame frame = new JFrame("rekenmachine");
@@ -75,22 +76,24 @@ public class Main {
     }
 
     public static void addnum(String buttonInput) {
-        if (operator != "" || oldnum == "") {
-            newnum += buttonInput;
+        Integer number = Integer.parseInt(buttonInput);
+        if (operator != "" || oldnum == 0.0) {
+            if (usingdecimal) {
+                newnum /= 10;
+                decimals++;
+            } else {
+                newnum *= 10;
+            }
+            newnum += number/Math.pow(10, decimals);
         }
         updatenumdisplay();
     }
 
-    public static Integer getnumber(String number) {
-        if (number == "") {
-            return 0;
-        } else {
-            return Integer.parseInt(number);
-        }
-    }
-
     public static void setoperator(String buttonInput) {
-        if (newnum != "") {
+        if (oldnum == 0) {
+            oldnum = newnum;
+        }
+        if (newnum != 0) {
             calculate();
         }
         operator = buttonInput;
@@ -100,17 +103,17 @@ public class Main {
     public static void calculate() {
         System.out.println(String.format("%s %s %s", oldnum, operator, newnum));
         if (operator == "*") {
-            oldnum = String.valueOf(getnumber(oldnum) * getnumber(newnum));
-        } else if (operator == "/" && getnumber(newnum) != 0) {
-            oldnum = String.valueOf(getnumber(oldnum) / getnumber(newnum));
+            oldnum = oldnum * newnum;
+        } else if (operator == "/" && newnum != 0) {
+            oldnum = oldnum / newnum;
         } else if (operator == "+") {
-            oldnum = String.valueOf(getnumber(oldnum) + getnumber(newnum));
+            oldnum = oldnum + newnum;
         } else if (operator == "-") {
-            oldnum = String.valueOf(getnumber(oldnum) - getnumber(newnum));
-        } else if (operator == "" && oldnum == "") {
+            oldnum = oldnum - newnum;
+        } else if (operator == "") {
             oldnum = newnum;
         }
-        newnum = "";
+        newnum = 0;
         operator = "";
         System.out.println(String.format("result calculated: %s %s %s", oldnum, operator, newnum));
         updatenumdisplay();
@@ -147,6 +150,14 @@ public class Main {
     }
 
     public static void updatenumdisplay() {
-        label.setText(String.format("%s %s %s", oldnum, operator, newnum));
+        String tempoldnum = String.valueOf(oldnum);
+        if (tempoldnum == "0.0") {
+            tempoldnum = "";
+        }
+        String tempnewnum = String.valueOf(newnum);
+        if (operator == "" && tempoldnum != "") {
+            tempnewnum = "";
+        }
+        label.setText(String.format("%s %s %s", tempoldnum, operator, tempnewnum));
     }
 }
