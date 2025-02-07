@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+// TODO: backspace
+// TODO: delete
+// TODO: decimals
 
 public class Main {
     // * define window size information */
@@ -69,12 +75,54 @@ public class Main {
         // * add the calculate button to the screen */
         addcalculatebutton(0, 5);
 
-        //* update screen and show window */
+        // * listen for input */
+        frame.setFocusable(true);
+        frame.requestFocusInWindow();
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                System.out.println("Key pressed: " + keyCode);
+                if (keyCode == 48 || keyCode == 96) {
+                    addnum("0");
+                } else if (keyCode == 49 || keyCode == 97) {
+                    addnum("1");
+                } else if (keyCode == 50 || keyCode == 98) {
+                    addnum("2");
+                } else if (keyCode == 51 || keyCode == 99) {
+                    addnum("3");
+                } else if (keyCode == 52 || keyCode == 100) {
+                    addnum("4");
+                } else if (keyCode == 53 || keyCode == 101) {
+                    addnum("5");
+                } else if (keyCode == 54 || keyCode == 102) {
+                    addnum("6");
+                } else if (keyCode == 55 || keyCode == 103) {
+                    addnum("7");
+                } else if (keyCode == 56 || keyCode == 104) {
+                    addnum("8");
+                } else if (keyCode == 57 || keyCode == 105) {
+                    addnum("9");
+                } else if (keyCode == 10) {
+                    calculate();
+                } else if (keyCode == 106) {
+                    setoperator("*");
+                } else if (keyCode == 111) {
+                    setoperator("/");
+                } else if (keyCode == 107) {
+                    setoperator("+");
+                } else if (keyCode == 109) {
+                    setoperator("-");
+                }
+            }
+        });
+
+        // * update screen and show window */
         updatenumdisplay();
         frame.setVisible(true);
     }
 
     public static void addnum(String buttonInput) {
+        frame.requestFocusInWindow();
         Integer number = Integer.parseInt(buttonInput);
         if (operator != "" || oldnum == 0.0) {
             if (usingdecimal) {
@@ -83,12 +131,13 @@ public class Main {
             } else {
                 newnum *= 10;
             }
-            newnum += number/Math.pow(10, decimals);
+            newnum += number / Math.pow(10, decimals);
         }
         updatenumdisplay();
     }
 
     public static void setoperator(String buttonInput) {
+        frame.requestFocusInWindow();
         if (oldnum == 0) {
             oldnum = newnum;
             newnum = 0;
@@ -101,6 +150,7 @@ public class Main {
     }
 
     public static void calculate() {
+        frame.requestFocusInWindow();
         System.out.println(String.format("%s %s %s", oldnum, operator, newnum));
         if (operator == "*") {
             oldnum = oldnum * newnum;
@@ -133,19 +183,20 @@ public class Main {
         ActionListener buttonListener = e -> calculate();
         createbutton(buttonListener, "=", gridx, gridy);
     }
-    public static void createbutton(ActionListener buttonListener,String displaytext , Integer gridx, Integer gridy) {
-        //* create a new button */
+
+    public static void createbutton(ActionListener buttonListener, String displaytext, Integer gridx, Integer gridy) {
+        // * create a new button */
         GridBagConstraints gbc = new GridBagConstraints();
-        //* set the display text */
+        // * set the display text */
         JButton num = new JButton(displaytext);
-        //* set the data */
+        // * set the data */
         num.setPreferredSize(buttonsize);
         num.setFont(buttonfont);
         num.addActionListener(buttonListener);
-        //* position the button */
+        // * position the button */
         gbc.gridx = gridx;
         gbc.gridy = gridy;
-        //* add the button */
+        // * add the button */
         frame.add(num, gbc);
     }
 
