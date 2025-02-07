@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.math.*;;
 
 public class Main {
     // * define window size information */
@@ -92,6 +91,7 @@ public class Main {
     public static void setoperator(String buttonInput) {
         if (oldnum == 0) {
             oldnum = newnum;
+            newnum = 0;
         }
         if (newnum != 0) {
             calculate();
