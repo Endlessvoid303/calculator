@@ -67,6 +67,7 @@ public class Main {
         // * add the calculate button to the screen */
         addcalculatebutton(0, 5);
 
+        //* update screen and show window */
         updatenumdisplay();
         frame.setVisible(true);
     }
