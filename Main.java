@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+
+// TODO:make a better way to add numbers after eachother using numbers /
 public class Main {
     // * define window size information */
     static short width = 600;
