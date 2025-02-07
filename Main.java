@@ -59,10 +59,10 @@ public class Main {
         addnumbutton(0, 0, 4);
 
         // * add the operators to the screen */
-        addopperatorbutton("+", 1, 4);
-        addopperatorbutton("*", 1, 5);
-        addopperatorbutton("/", 2, 5);
-        addopperatorbutton("-", 2, 4);
+        addoperatorbutton("+", 1, 4);
+        addoperatorbutton("*", 1, 5);
+        addoperatorbutton("/", 2, 5);
+        addoperatorbutton("-", 2, 4);
 
         // * add the calculate button to the screen */
         addcalculatebutton(0, 5);
@@ -119,7 +119,7 @@ public class Main {
         createbutton(buttonListener, String.valueOf(nummer), gridx, gridy);
     }
 
-    public static void addopperatorbutton(String operator, Integer gridx, Integer gridy) {
+    public static void addoperatorbutton(String operator, Integer gridx, Integer gridy) {
         ActionListener buttonListener = e -> setoperator(((JButton) e.getSource()).getText());
         createbutton(buttonListener, operator, gridx, gridy);
     }
