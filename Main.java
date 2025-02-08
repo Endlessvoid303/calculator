@@ -4,10 +4,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-// TODO: backspace
-// TODO: delete
-// TODO: decimals
-
 public class Main {
     // * define window size information */
     static short width = 600;
