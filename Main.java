@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 
 public class Main {
     // * define window size information */
@@ -10,18 +11,18 @@ public class Main {
     static short height = 900;
 
     // * define data about the buttons */
-    static Dimension buttonsize = new Dimension((width - 60) / 3, (height - 60) / 7);
+    static Dimension buttonSize = new Dimension((width - 60) / 3, (height - 60) / 7);
     static Font buttonfont = new Font("Arial", Font.PLAIN, 40);
 
     // * set defaults for calculator data */
-    static double oldnum = 0;
+    static double oldNum = 0;
     static String operator = "";
-    static double newnum = 0;
-    static boolean usingdecimal = false;
+    static double newNum = 0;
+    static boolean usingDecimal = false;
     static short decimals = 0;
 
     // * create a window */
-    static JFrame frame = new JFrame("rekenmachine");
+    static JFrame frame = new JFrame("calculator");
 
     // * create the screen */
     static JLabel label = new JLabel("testing 123");
@@ -51,30 +52,30 @@ public class Main {
         frame.add(label, gbc);
 
         // * add the numbers to the screen */
-        addnumbutton(1, 0, 1);
-        addnumbutton(2, 1, 1);
-        addnumbutton(3, 2, 1);
-        addnumbutton(4, 0, 2);
-        addnumbutton(5, 1, 2);
-        addnumbutton(6, 2, 2);
-        addnumbutton(7, 0, 3);
-        addnumbutton(8, 1, 3);
-        addnumbutton(9, 2, 3);
-        addnumbutton(0, 0, 4);
+        addNumButton(1, 0, 1);
+        addNumButton(2, 1, 1);
+        addNumButton(3, 2, 1);
+        addNumButton(4, 0, 2);
+        addNumButton(5, 1, 2);
+        addNumButton(6, 2, 2);
+        addNumButton(7, 0, 3);
+        addNumButton(8, 1, 3);
+        addNumButton(9, 2, 3);
+        addNumButton(0, 0, 4);
 
         // * add the operators to the screen */
-        addoperatorbutton("+", 1, 4);
-        addoperatorbutton("*", 1, 5);
-        addoperatorbutton("/", 2, 5);
-        addoperatorbutton("-", 2, 4);
+        addOperatorButton("+", 1, 4);
+        addOperatorButton("*", 1, 5);
+        addOperatorButton("/", 2, 5);
+        addOperatorButton("-", 2, 4);
 
         // * add the calculate button to the screen */
-        addcalculatebutton(0, 5);
+        addCalculateButton(0, 5);
 
         //* add other buttons */
-        adddecimalbutton(0, 6);
-        addbackspacebutton(1, 6);
-        adddeletebutton(2,6);
+        addDecimalButton(0, 6);
+        addBackspaceButton(1, 6);
+        addDeleteButton(2, 6);
 
         // * listen for input */
         frame.setFocusable(true);
@@ -84,171 +85,176 @@ public class Main {
                 int keyCode = e.getKeyCode();
                 System.out.println("Key pressed: " + keyCode);
                 if (keyCode == 48 || keyCode == 96) {
-                    addnum("0");
+                    addNum("0");
                 } else if (keyCode == 49 || keyCode == 97) {
-                    addnum("1");
+                    addNum("1");
                 } else if (keyCode == 50 || keyCode == 98) {
-                    addnum("2");
+                    addNum("2");
                 } else if (keyCode == 51 || keyCode == 99) {
-                    addnum("3");
+                    addNum("3");
                 } else if (keyCode == 52 || keyCode == 100) {
-                    addnum("4");
+                    addNum("4");
                 } else if (keyCode == 53 || keyCode == 101) {
-                    addnum("5");
+                    addNum("5");
                 } else if (keyCode == 54 || keyCode == 102) {
-                    addnum("6");
+                    addNum("6");
                 } else if (keyCode == 55 || keyCode == 103) {
-                    addnum("7");
+                    addNum("7");
                 } else if (keyCode == 56 || keyCode == 104) {
-                    addnum("8");
+                    addNum("8");
                 } else if (keyCode == 57 || keyCode == 105) {
-                    addnum("9");
+                    addNum("9");
                 } else if (keyCode == 10) {
                     calculate();
                 } else if (keyCode == 106) {
-                    setoperator("*");
+                    setOperator("*");
                 } else if (keyCode == 111) {
-                    setoperator("/");
+                    setOperator("/");
                 } else if (keyCode == 107) {
-                    setoperator("+");
+                    setOperator("+");
                 } else if (keyCode == 109) {
-                    setoperator("-");
-                } else if (keyCode == 57 || keyCode == 105) {
+                    setOperator("-");
+                } else if (keyCode == 46 || keyCode == 110) {
                     decimal();
-                } else if (keyCode == 110) {
-                    delete();
                 } else if (keyCode == 127) {
-                    backspace();;
+                    delete();
+                } else if (keyCode == 8) {
+                    backspace();
                 }
             }
         });
 
         // * update screen and show window */
-        updatenumdisplay();
+        updateNumDisplay();
         frame.setVisible(true);
     }
+
     public static void delete() {
         frame.requestFocusInWindow();
-        oldnum = 0;
+        oldNum = 0;
         operator = "";
-        newnum = 0;
-        usingdecimal = false;
+        newNum = 0;
+        usingDecimal = false;
         decimals = 0;
-        updatenumdisplay();
+        updateNumDisplay();
     }
+
     public static void backspace() {
         frame.requestFocusInWindow();
-        newnum = 0;
-        usingdecimal = false;
+        newNum = 0;
+        usingDecimal = false;
         decimals = 0;
-        updatenumdisplay();
+        updateNumDisplay();
     }
+
     public static void decimal() {
         frame.requestFocusInWindow();
-        usingdecimal = true;
-        updatenumdisplay();
+        usingDecimal = true;
+        updateNumDisplay();
     }
 
-    public static void addnum(String buttonInput) {
+    public static void addNum(String buttonInput) {
         frame.requestFocusInWindow();
-        Integer number = Integer.parseInt(buttonInput);
-        if (operator != "" || oldnum == 0.0) {
-            if (usingdecimal) {
+        int number = Integer.parseInt(buttonInput);
+        if (!Objects.equals(operator, "") || oldNum == 0.0) {
+            if (usingDecimal) {
                 decimals++;
             } else {
-                newnum *= 10;
+                newNum *= 10;
             }
-            newnum += number / Math.pow(10, decimals);
+            newNum += number / Math.pow(10, decimals);
         }
-        updatenumdisplay();
+        updateNumDisplay();
     }
 
-    public static void setoperator(String buttonInput) {
+    public static void setOperator(String buttonInput) {
         frame.requestFocusInWindow();
-        if (oldnum == 0) {
-            oldnum = newnum;
-            newnum = 0;
+        if (oldNum == 0) {
+            oldNum = newNum;
+            newNum = 0;
         }
-        if (newnum != 0) {
+        if (newNum != 0) {
             calculate();
         }
         operator = buttonInput;
-        updatenumdisplay();
+        updateNumDisplay();
     }
 
     public static void calculate() {
         frame.requestFocusInWindow();
-        System.out.println(String.format("%s %s %s", oldnum, operator, newnum));
-        if (operator == "*") {
-            oldnum = oldnum * newnum;
-        } else if (operator == "/" && newnum != 0) {
-            oldnum = oldnum / newnum;
-        } else if (operator == "+") {
-            oldnum = oldnum + newnum;
-        } else if (operator == "-") {
-            oldnum = oldnum - newnum;
-        } else if (operator == "") {
-            oldnum = newnum;
+        System.out.printf("%s %s %s%n", oldNum, operator, newNum);
+        if (Objects.equals(operator, "*")) {
+            oldNum = oldNum * newNum;
+        } else if (Objects.equals(operator, "/") && newNum != 0) {
+            oldNum = oldNum / newNum;
+        } else if (Objects.equals(operator, "+")) {
+            oldNum = oldNum + newNum;
+        } else if (Objects.equals(operator, "-")) {
+            oldNum = oldNum - newNum;
+        } else if (Objects.equals(operator, "")) {
+            oldNum = newNum;
         }
-        newnum = 0;
+        newNum = 0;
         operator = "";
-        System.out.println(String.format("result calculated: %s %s %s", oldnum, operator, newnum));
-        updatenumdisplay();
+        System.out.printf("result calculated: %s %s %s%n", oldNum, operator, newNum);
+        updateNumDisplay();
     }
 
-    public static void adddecimalbutton(Integer gridx, Integer gridy) {
+    public static void addDecimalButton(Integer gridx, Integer gridY) {
         ActionListener buttonListener = e -> decimal();
-        createbutton(buttonListener, ".", gridx, gridy);
+        createButton(buttonListener, ".", gridx, gridY);
     }
-    public static void addbackspacebutton(Integer gridx, Integer gridy) {
-        ActionListener buttonListener = e -> backspace();;
-        createbutton(buttonListener, "<-", gridx, gridy);
+
+    public static void addBackspaceButton(Integer gridx, Integer gridY) {
+        ActionListener buttonListener = e -> backspace();
+        createButton(buttonListener, "<-", gridx, gridY);
     }
-    public static void adddeletebutton(Integer gridx, Integer gridy) {
+
+    public static void addDeleteButton(Integer gridx, Integer gridY) {
         ActionListener buttonListener = e -> delete();
-        createbutton(buttonListener, "x", gridx, gridy);
+        createButton(buttonListener, "x", gridx, gridY);
     }
 
-    public static void addnumbutton(Integer nummer, Integer gridx, Integer gridy) {
-        ActionListener buttonListener = e -> addnum(((JButton) e.getSource()).getText());
-        createbutton(buttonListener, String.valueOf(nummer), gridx, gridy);
+    public static void addNumButton(Integer number, Integer gridx, Integer gridY) {
+        ActionListener buttonListener = e -> addNum(((JButton) e.getSource()).getText());
+        createButton(buttonListener, String.valueOf(number), gridx, gridY);
     }
 
-    public static void addoperatorbutton(String operator, Integer gridx, Integer gridy) {
-        ActionListener buttonListener = e -> setoperator(((JButton) e.getSource()).getText());
-        createbutton(buttonListener, operator, gridx, gridy);
+    public static void addOperatorButton(String operator, Integer gridx, Integer gridY) {
+        ActionListener buttonListener = e -> setOperator(((JButton) e.getSource()).getText());
+        createButton(buttonListener, operator, gridx, gridY);
     }
 
-    public static void addcalculatebutton(Integer gridx, Integer gridy) {
+    public static void addCalculateButton(Integer gridx, Integer gridY) {
         ActionListener buttonListener = e -> calculate();
-        createbutton(buttonListener, "=", gridx, gridy);
+        createButton(buttonListener, "=", gridx, gridY);
     }
 
-    public static void createbutton(ActionListener buttonListener, String displaytext, Integer gridx, Integer gridy) {
+    public static void createButton(ActionListener buttonListener, String displayText, Integer gridx, Integer gridY) {
         // * create a new button */
         GridBagConstraints gbc = new GridBagConstraints();
         // * set the display text */
-        JButton num = new JButton(displaytext);
+        JButton num = new JButton(displayText);
         // * set the data */
-        num.setPreferredSize(buttonsize);
+        num.setPreferredSize(buttonSize);
         num.setFont(buttonfont);
         num.addActionListener(buttonListener);
         // * position the button */
         gbc.gridx = gridx;
-        gbc.gridy = gridy;
+        gbc.gridy = gridY;
         // * add the button */
         frame.add(num, gbc);
     }
 
-    public static void updatenumdisplay() {
-        String tempoldnum = String.valueOf(oldnum);
-        if (tempoldnum == "0.0") {
-            tempoldnum = "";
+    public static void updateNumDisplay() {
+        String tempOldNum = String.valueOf(oldNum);
+        if (tempOldNum.equals("0.0")) {
+            tempOldNum = "";
         }
-        String tempnewnum = String.valueOf(newnum);
-        if (operator == "" && tempoldnum != "") {
-            tempnewnum = "";
+        String tempNewNum = String.valueOf(newNum);
+        if (Objects.equals(operator, "") && !tempOldNum.isEmpty()) {
+            tempNewNum = "";
         }
-        label.setText(String.format("%s %s %s", tempoldnum, operator, tempnewnum));
+        label.setText(String.format("%s %s %s", tempOldNum, operator, tempNewNum));
     }
 }
