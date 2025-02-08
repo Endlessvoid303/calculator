@@ -113,6 +113,12 @@ public class Main {
                     setoperator("+");
                 } else if (keyCode == 109) {
                     setoperator("-");
+                } else if (keyCode == 57 || keyCode == 105) {
+                    decimal();
+                } else if (keyCode == 110) {
+                    delete();
+                } else if (keyCode == 127) {
+                    backspace();;
                 }
             }
         });
