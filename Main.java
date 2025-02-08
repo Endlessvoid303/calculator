@@ -236,7 +236,7 @@ public class Main {
         // * position the button */
         gbc.gridx = gridx;
         gbc.gridy = gridy;
-        // * add the button to the window */
+        // * add the button */
         frame.add(num, gbc);
     }
 
