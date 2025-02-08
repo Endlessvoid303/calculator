@@ -4,12 +4,12 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>my-java-project</artifactId>
+    <groupId>com.endlessvoid</groupId>
+    <artifactId>calculator</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>My Java Project</name>
+    <name>calculator</name>
     <description>A simple Java project built with Maven</description>
 
     <properties>
