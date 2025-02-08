@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'release*'  # Runs only when a tag like "v1.0" is pushed
+      - 'v*'  # Runs only when a tag like "v1.0" is pushed
 
 jobs:
   build:
