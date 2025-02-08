@@ -126,6 +126,7 @@ public class Main {
         frame.setVisible(true);
     }
     public static void delete() {
+        frame.requestFocusInWindow();
         oldnum = 0;
         operator = "";
         newnum = 0;
@@ -134,12 +135,14 @@ public class Main {
         updatenumdisplay();
     }
     public static void backspace() {
+        frame.requestFocusInWindow();
         newnum = 0;
         usingdecimal = false;
         decimals = 0;
         updatenumdisplay();
     }
     public static void decimal() {
+        frame.requestFocusInWindow();
         usingdecimal = true;
         updatenumdisplay();
     }
